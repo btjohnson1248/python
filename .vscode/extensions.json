@@ -1,0 +1,11 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  "recommendations": [
+      "EditorConfig.EditorConfig",
+      "ms-python.python",
+      "amazonwebservices.aws-toolkit-vscode",
+      "kddejong.vscode-cfn-lint",
+      "timonwong.shellcheck"
+  ]
+}
