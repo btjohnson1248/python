@@ -2,6 +2,8 @@
 
 Template that show a basic python repo using AWS Tools
 
+https://google.github.io/styleguide/pyguide.html
+
 ## Files
 
 ### setup.cfg
@@ -412,17 +414,75 @@ exclude_lines =
 
 
 ### cfn-lint
+
 Lints CloudFormation and SAM Template [cfn-lint](https://github.com/aws-cloudformation/cfn-lint)
 ```
 cfn-lint path/**/*.yaml
 ```
 
 ### shellcheck
+
 Lints Shell code
 
 To run `shellcheck **/*.sh`
 
 Add `# shellcheck disable=$CODE` above line to ignore it
+
+
+
+
+
+### pre-commit
+
+Install the pre-commit hook `pre-commit install`
+
+Update the hooks `pre-commit update`
+
+Run against all files in the repo `pre-commit run -a`
+
+Run against all staged files `pre-commit run`
+
+```
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.3.0
+  hooks:
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: check-json
+    exclude: (settings|launch|extensions).json
+  - id: check-shebang-scripts-are-executable
+  # - id: detect-aws-credentials
+  - id: detect-private-key
+  - id: trailing-whitespace
+# - repo: https://github.com/aws-cloudformation/cfn-python-lint
+#   rev: v0.61.0
+#   hooks:
+#   - id: cfn-python-lint
+- repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+  rev: 2.4.0
+  hooks:
+  - id: editorconfig-checker
+    alias: ec
+    files: .editorconfig
+- repo: https://github.com/PyCQA/flake8
+  rev: 4.0.1
+  hooks:
+  - id: flake8
+    args: ['--config=setup.cfg']
+    types: [python]
+    additional_dependencies:
+      - flake8
+      - flake8-black
+      - flake8-isort
+      - isort
+      - black
+    language_version: python3
+- repo: https://github.com/shellcheck-py/shellcheck-py
+  rev: v0.8.0.4
+  hooks:
+  - id: shellcheck
+```
 
 ## Dev Setup
 
@@ -431,7 +491,7 @@ Add `# shellcheck disable=$CODE` above line to ignore it
 - Install VSCode extensions
 
 ```
-pip install -U pip wheel setuptools flake8 flake8-builtins flake8-comprehensions flake8-fixme flake8-functions-names flake8-print flake8-eradicate flake8-bugbear flake8-unused-arguments flake8-sfs flake8-annotations pytest pytest-cov black tox isort cfn-lint
+pip install -U -r dev-requirements.txt
 code --install-extension EditorConfig.EditorConfig
 code --install-extension ms-python.python
 code --install-extension ms-python.vscode-pylance

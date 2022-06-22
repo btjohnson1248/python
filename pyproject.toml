@@ -27,3 +27,6 @@ exclude = '''
 
 [tool.isort]
 profile = "black"
+
+[tool.bandit]
+exclude_dirs = ["tests"]
